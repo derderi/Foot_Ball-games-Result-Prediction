@@ -1,8 +1,8 @@
 
 
-ÇáÚãá İí ÇáÊæŞÚ ÇáÚáãí İí äÊÇÆÌ ßÑÉ ÇáŞÏã
-Úãá æÊäİíĞ ÏßÊæÑ ÇáÏÑÏíÑí İÖá ÅÈÑÇåíã İÖá
-?
+Done By:
+Dr.Eldirdiri Fadol Ibrahim Fadol
+
  import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
