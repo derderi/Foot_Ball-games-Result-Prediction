@@ -1,0 +1,52 @@
+
+
+«·⁄„· ›Ì «· Êﬁ⁄ «·⁄·„Ì ›Ì ‰ «∆Ã ﬂ—… «·ﬁœ„
+⁄„· Ê ‰›Ì– œﬂ Ê— «·œ—œÌ—Ì ›÷· ≈»—«ÂÌ„ ›÷·
+?
+ import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+ from scipy.stats import poisson,skellam
+import matplotlib.pyplot as py
+ from scipy.optimize import minimize
+?
+epl_1718 = pd.read_csv("http://www.football-data.co.uk/mmz4281/1718/E0.csv")
+?
+ epl_1718 = epl_1718[['HomeTeam','AwayTeam','FTHG','FTAG']]
+?
+epl_1718 = epl_1718.rename(columns={'FTHG': 'HomeGoals', 'FTAG': 'AwayGoals'})
+?
+epl_1718.head()
+HomeTeam    AwayTeam    HomeGoals   AwayGoals
+0   Arsenal Leicester   4   3
+1   Brighton    Man City    0   2
+2   Chelsea Burnley 2   3
+3   Crystal Palace  Huddersfield    0   3
+4   Everton Stoke   1   0
+?
+epl_1718 = epl_1718[:-10]
+?
+epl_1718.mean()
+HomeGoals    1.518919
+AwayGoals    1.148649
+dtype: float64
+?
+plt.hist(epl_1718[['HomeGoals', 'AwayGoals']].values, range(9), 
+         alpha=0.7, label=['Home', 'Away'],normed=True, color=["#FFA07A", "#20B2AA"])
+([array([ 0.23783784,  0.33243243,  0.24324324,  0.08918919,  0.05945946,
+          0.03513514,  0.        ,  0.0027027 ]),
+  array([ 0.35675676,  0.33513514,  0.17027027,  0.08918919,  0.04054054,
+          0.00540541,  0.0027027 ,  0.        ])],
+ array([0, 1, 2, 3, 4, 5, 6, 7, 8]),
+ <a list of 2 Lists of Patches objects>)
+?
+poisson_pred = np.column_stack([[poisson.pmf(i, epl_1718.mean()[j]) for i in range(8)] for j in range(2)])
+?
+pois1, = plt.plot([i-0.5 for i in range(1,9)], poisson_pred[:,0],
+                  linestyle='-', marker='o',label="Home", color = '#CD5C5C')
+?
+pois2, = plt.plot([i-0.5 for i in range(1,9)], poisson_pred[:,1],
+                  linestyle='-', marker='o',label="Away", color = '#006400')
+?
+leg=plt.legend(loc='upper right', fontsize=13, ncol=2)
